@@ -7,10 +7,10 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		//Decathlon
-		CombinedEvent decathlon = CombinedEventFactory(CombinedEvent.DECATHLON);
+		//CombinedEvent decathlon = CombinedEventFactory(CombinedEvent.DECATHLON);
 		
 		//Heptathlon
-		CombinedEvent heptathlon = CombinedEventFactory(CombinedEvent.HEPTATHLON);
+		//CombinedEvent heptathlon = CombinedEventFactory(CombinedEvent.HEPTATHLON);
 
 	}
 
