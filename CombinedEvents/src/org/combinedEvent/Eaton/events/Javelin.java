@@ -15,11 +15,7 @@ public class Javelin extends Event implements IFieldEvent {
 	}
 	
 	public Javelin(String measurement) {
-		if (measurement == null || measurement.equals("")) {
-			this.setDistance("7.01");
-		} else {
-			this.setDistance(measurement);
-		}
+		this.setDistance(measurement);
 	}
 
 	public String getDistance() {
@@ -28,6 +24,9 @@ public class Javelin extends Event implements IFieldEvent {
 
 	public void setDistance(String distance) {
 		this.perf = distance;
+		if (distance == null || distance.equals("")) {
+			distance ="7.01";
+		}
 		points = compute(new BigDecimal(distance), PARAM_A, PARAM_B, PARAM_C, FIELD_EVENT);
 	}
 

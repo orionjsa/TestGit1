@@ -16,15 +16,10 @@ public class Run1500m extends Event implements ITrackEvent {
 
 	public Run1500m() {
 		super();
-		this.setTime("7:49.99");
 	}
 	
 	public Run1500m(String time) {
-		if (time == null || time.equals("")) {
-			this.setTime("7:49.99");
-		} else {
-			this.setTime(time);
-		}
+		this.setTime(time);
 	}
 
 	public String getTime() {
@@ -33,6 +28,9 @@ public class Run1500m extends Event implements ITrackEvent {
 
 	public void setTime(String time) {
 		this.perf = time;
+		if (time == null || time.equals("")) {
+			time = "7:59.99";
+		}
 		SimpleDateFormat stringToDate = new SimpleDateFormat("hh:mm:ss.SSS");
 		try {
 			this.internalTime = stringToDate.parse("01:"+time+"0");
@@ -45,5 +43,17 @@ public class Run1500m extends Event implements ITrackEvent {
 
 	public int getPoints() {
 		return points;
+	}
+
+	public Double getInternalTime() {
+		return new Double(internalTime.getTime())/1000;
+	}
+	
+	public static String internalTime2String(Double value) {
+		value = value*1000;
+		Date date = new Date(value.longValue());
+		SimpleDateFormat dateToString = new SimpleDateFormat("hh:mm:ss.SSS");
+		String str = dateToString.format(date);
+		return str.substring(4, 11);
 	}
 }

@@ -11,15 +11,10 @@ public class Run100m extends Event implements ITrackEvent {
 
 	public Run100m() {
 		super();
-		this.setTime("17.99");
 	}
 	
 	public Run100m(String time) {
-		if (time == null || time.equals("")) {
-			this.setTime("17.99");
-		} else {
-			this.setTime(time);
-		}
+		this.setTime(time);
 	}
 
 	public String getTime() {
@@ -28,6 +23,9 @@ public class Run100m extends Event implements ITrackEvent {
 
 	public void setTime(String time) {
 		this.perf = time;
+		if (time == null || time.equals("")) {
+			time = "17.99";
+		}
 		points = compute(new BigDecimal(time), PARAM_A, PARAM_B, PARAM_C, TRACK_EVENT);
 	}
 

@@ -3,6 +3,8 @@ package org.combinedEvent.Eaton;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.combinedEvent.Eaton.events.Run1500m;
+
 public class Eaton {
 
 	/**
@@ -27,7 +29,7 @@ public class Eaton {
 		Decathlon recordDuMonde = new Decathlon("World Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		
 		Decathlon moyenneSurLes3DerniersDeca = avg3derniersDeca(dernierDeca, avantDernierDeca, antepenultiemeDeca);
-		//Decathlon toBeatWorldRecord = avg3derniersDeca(dernierDeca, avantDernierDeca, antepenultiemeDeca);
+		Decathlon newWorldRecord = toBeatWorldRecord(actuel);
 		
 		
 		
@@ -49,6 +51,17 @@ public class Eaton {
 		System.out.println(recordDuMonde);
 	}
 	
+	public static Decathlon toBeatWorldRecord(Decathlon actuel) {
+		// compter combien il reste d'epreuves
+		// soustraire du WR le total actuel puis diviser par le nombre d epreuves restantes
+		// de la plus petite à la plus forte répartir les points jusqu'au points du record en deca
+		// si le WR n'est pas battu faire la meme chose avec le best dans chaque epreuves
+		// si le WR n'est pas battu repartir l'ecart de point restant dans chaque epreuve
+		
+		Decathlon deca = new Decathlon();//"New World Record",r100,rlong,rshot,rhigh,r400,r110,rdisc,rpole,rjav,Run1500m.internalTime2String(r1500));
+		return deca;
+	}
+	
 	public static Decathlon avg3derniersDeca(Decathlon n, Decathlon nMoins1, Decathlon nMoins2) {
 		String r100 = avg3Events(n.getRun100m().getTime(), nMoins1.getRun100m().getTime(), nMoins2.getRun100m().getTime());
 		String rlong = avg3Events(n.getLongJump().getDistance(), nMoins1.getLongJump().getDistance(), nMoins2.getLongJump().getDistance());
@@ -59,9 +72,9 @@ public class Eaton {
 		String rdisc = avg3Events(n.getDiscus().getDistance(), nMoins1.getDiscus().getDistance(), nMoins2.getDiscus().getDistance());
 		String rpole = avg3Events(n.getPoleVault().getDistance(), nMoins1.getPoleVault().getDistance(), nMoins2.getPoleVault().getDistance());
 		String rjav = avg3Events(n.getJavelin().getDistance(), nMoins1.getJavelin().getDistance(), nMoins2.getJavelin().getDistance());
-		//String r1500 = avg3Events(n.getRun1500m().getTime(), nMoins1.getRun1500m().getTime(), nMoins2.getRun1500m().getTime());
+		Double r1500 = avg3Events(n.getRun1500m().getInternalTime(), nMoins1.getRun1500m().getInternalTime(), nMoins2.getRun1500m().getInternalTime());
 		
-		Decathlon deca = new Decathlon("AVG",r100,rlong,rshot,rhigh,r400,r110,rdisc,rpole,rjav,"4:20.00");
+		Decathlon deca = new Decathlon("AVG",r100,rlong,rshot,rhigh,r400,r110,rdisc,rpole,rjav,Run1500m.internalTime2String(r1500));
 		return deca;
 	}
 	
@@ -72,6 +85,15 @@ public class Eaton {
 		BigDecimal res = b1.add(b2).add(b3).divide(new BigDecimal("3"), 2, RoundingMode.HALF_UP);
 		
 		return res.toString();
+	}
+	
+	public static Double avg3Events(Double p1, Double p2, Double p3) {
+		BigDecimal b1 = new BigDecimal(p1);
+		BigDecimal b2 = new BigDecimal(p2);
+		BigDecimal b3 = new BigDecimal(p3);
+		BigDecimal res = b1.add(b2).add(b3).divide(new BigDecimal("3"), 2, RoundingMode.HALF_UP);
+		
+		return new Double(res.doubleValue());
 	}
 
 }

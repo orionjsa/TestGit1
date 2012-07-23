@@ -47,7 +47,7 @@ public class Decathlon {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(">>>").append(name).append("\t").append(getTotal()).append("\n");
+		sb.append("** ").append(name).append("\n>>> ").append(getTotal()).append("\n");
 		sb.append(run100m.getTime()).append("\t");
 		sb.append(longJump.getDistance()).append("\t");
 		sb.append(shotput.getDistance()).append("\t");

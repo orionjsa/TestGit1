@@ -11,15 +11,10 @@ public class Shotput extends Event implements IFieldEvent {
 
 	public Shotput() {
 		super();
-		this.setDistance("1.51");
 	}
 	
 	public Shotput(String measurement) {
-		if (measurement == null || measurement.equals("")) {
-			this.setDistance("1.51");
-		} else {
-			this.setDistance(measurement);
-		}
+		this.setDistance(measurement);
 	}
 	
 	public String getDistance() {
@@ -28,6 +23,9 @@ public class Shotput extends Event implements IFieldEvent {
 
 	public void setDistance(String distance) {
 		this.perf = distance;
+		if (distance == null || distance.equals("")) {
+			distance ="1.51";
+		}
 		points = compute(new BigDecimal(distance), PARAM_A, PARAM_B, PARAM_C, FIELD_EVENT);
 	}
 

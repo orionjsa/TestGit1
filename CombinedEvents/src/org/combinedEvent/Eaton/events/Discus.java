@@ -11,15 +11,10 @@ public class Discus extends Event implements IFieldEvent {
 
 	public Discus() {
 		super();
-		this.setDistance("4.01");
 	}
 	
 	public Discus(String measurement) {
-		if (measurement == null || measurement.equals("")) {
-			this.setDistance("4.01");
-		} else {
-			this.setDistance(measurement);
-		}
+		this.setDistance(measurement);
 	}
 
 	public String getDistance() {
@@ -28,6 +23,9 @@ public class Discus extends Event implements IFieldEvent {
 
 	public void setDistance(String distance) {
 		this.perf = distance;
+		if (distance == null || distance.equals("")) {
+			distance ="4.01";
+		}
 		points = compute(new BigDecimal(distance), PARAM_A, PARAM_B, PARAM_C, FIELD_EVENT);
 	}
 

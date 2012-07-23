@@ -11,15 +11,10 @@ public class HighJump extends Event implements IFieldEvent {
 
 	public HighJump() {
 		super();
-		this.setDistance("76");
 	}
 	
 	public HighJump(String measurement) {
-		if (measurement == null || measurement.equals("")) {
-			this.setDistance("76");
-		} else {
-			this.setDistance(measurement);
-		}
+		this.setDistance(measurement);
 	}
 
 	public String getDistance() {
@@ -28,7 +23,10 @@ public class HighJump extends Event implements IFieldEvent {
 
 	public void setDistance(String measurement) {
 		this.perf = measurement;
-		points = compute(new BigDecimal(perf), PARAM_A, PARAM_B, PARAM_C, FIELD_EVENT);
+		if (measurement == null || measurement.equals("")) {
+			measurement ="76";
+		}
+		points = compute(new BigDecimal(measurement), PARAM_A, PARAM_B, PARAM_C, FIELD_EVENT);
 	}
 
 	public int getPoints() {
