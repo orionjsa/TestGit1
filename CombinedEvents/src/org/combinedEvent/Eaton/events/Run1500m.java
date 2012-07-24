@@ -56,4 +56,9 @@ public class Run1500m extends Event implements ITrackEvent {
 		String str = dateToString.format(date);
 		return str.substring(4, 11);
 	}
+	
+	public String findPerfWithPoints(BigDecimal points) {
+		BigDecimal bd = retreivePerf(points, PARAM_A, PARAM_B, PARAM_C, TRACK_EVENT);
+		return internalTime2String(bd.setScale(2, BigDecimal.ROUND_DOWN).doubleValue());
+	}
 }

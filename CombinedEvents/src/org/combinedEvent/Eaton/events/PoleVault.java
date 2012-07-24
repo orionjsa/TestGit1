@@ -32,4 +32,9 @@ public class PoleVault extends Event implements IFieldEvent {
 	public int getPoints() {
 		return points;
 	}
+	
+	public String findPerfWithPoints(BigDecimal points) {
+		BigDecimal bd = retreivePerf(points, PARAM_A, PARAM_B, PARAM_C, FIELD_EVENT);
+		return bd.setScale(0, BigDecimal.ROUND_UP).toString();
+	}
 }

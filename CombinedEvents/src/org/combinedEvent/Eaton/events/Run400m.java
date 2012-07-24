@@ -32,4 +32,9 @@ public class Run400m extends Event implements ITrackEvent {
 	public int getPoints() {
 		return points;
 	}
+	
+	public String findPerfWithPoints(BigDecimal points) {
+		BigDecimal bd = retreivePerf(points, PARAM_A, PARAM_B, PARAM_C, TRACK_EVENT);
+		return bd.setScale(2, BigDecimal.ROUND_DOWN).toString();
+	}
 }

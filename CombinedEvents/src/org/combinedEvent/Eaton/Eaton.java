@@ -2,6 +2,8 @@ package org.combinedEvent.Eaton;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.combinedEvent.Eaton.events.Run1500m;
 
@@ -20,7 +22,7 @@ public class Eaton {
 		Decathlon antepenultiemeDeca = new Decathlon("Deca n-2", "10.33", "780", "14.14", "205", "46.35", "13.52", "41.58", "505", "56.19", "4:24.10");
 		
 		// pronostic
-		Decathlon pronostic = new Decathlon("Pronostic", "10.40", "770", "14.00", "200", "47.00", "13.90", "42.00", "490", "56.00", "4:20.00");
+		Decathlon pronostic = new Decathlon("Pronostic", "10.35", "780", "14.00", "200", "46.80", "13.90", "43.00", "500", "56.00", "4:20.00");
 		// record perso deca
 		Decathlon recordPerso = new Decathlon("Personal Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		// record perso epreuves
@@ -29,7 +31,7 @@ public class Eaton {
 		Decathlon recordDuMonde = new Decathlon("World Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		
 		Decathlon moyenneSurLes3DerniersDeca = avg3derniersDeca(dernierDeca, avantDernierDeca, antepenultiemeDeca);
-		Decathlon newWorldRecord = toBeatWorldRecord(actuel);
+		Decathlon newWorldRecord = toBeatWorldRecord(actuel, recordDuMonde, moyenneSurLes3DerniersDeca);
 		
 		
 		
@@ -42,7 +44,7 @@ public class Eaton {
 		// print moyenne
 		System.out.println(moyenneSurLes3DerniersDeca);
 		// print to beat
-		//System.out.println(toBeatWorldRecord);
+		System.out.println(newWorldRecord);
 		// print perso epreuves
 		System.out.println(persoEpreuves);
 		// print perso deca
@@ -51,15 +53,128 @@ public class Eaton {
 		System.out.println(recordDuMonde);
 	}
 	
-	public static Decathlon toBeatWorldRecord(Decathlon actuel) {
+	public static Decathlon toBeatWorldRecord(Decathlon actuel, Decathlon recordDuMonde, Decathlon moyenneSurLes3DerniersDeca) {
+		// trouver la repartition de point en se basant sur le deca moyen
+		Map repartition = getRepartirion(moyenneSurLes3DerniersDeca);
+		BigDecimal totalRepartition = new BigDecimal("0");
 		// compter combien il reste d'epreuves
-		// soustraire du WR le total actuel puis diviser par le nombre d epreuves restantes
+		int restantes = 0;
+		if (actuel.getRun100m().getTime() == null || actuel.getRun100m().getTime().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("1"));
+		}
+		if (actuel.getLongJump().getDistance() == null || actuel.getLongJump().getDistance().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("2"));
+		}
+		if (actuel.getShotput().getDistance() == null || actuel.getShotput().getDistance().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("3"));
+		}
+		if (actuel.getHighJump().getDistance() == null || actuel.getHighJump().getDistance().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("4"));
+		}
+		if (actuel.getRun400m().getTime() == null || actuel.getRun400m().getTime().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("5"));
+		}
+		if (actuel.getRun110mH().getTime() == null || actuel.getRun110mH().getTime().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("6"));
+		}
+		if (actuel.getDiscus().getDistance() == null || actuel.getDiscus().getDistance().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("7"));
+		}
+		if (actuel.getPoleVault().getDistance() == null || actuel.getPoleVault().getDistance().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("8"));
+		}
+		if (actuel.getJavelin().getDistance() == null || actuel.getJavelin().getDistance().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("9"));
+		}
+		if (actuel.getRun1500m().getTime() == null || actuel.getRun1500m().getTime().equals("")) {
+			restantes++;
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("10"));
+		}
+		// soustraire du WR+1pt le total actuel puis diviser par le nombre d epreuves restantes
+		int ecartParEpreuve = (recordDuMonde.getTotal()+2-actuel.getTotal())/restantes;
+		// on génére une perf en fonction de l'ecart du total et la repartion des points dans les epruves
+		int ecart = (recordDuMonde.getTotal()+1-actuel.getTotal());
+		String s100 = actuel.getRun100m().getTime();
+		String sLong = actuel.getLongJump().getDistance();
+		String sShot = actuel.getShotput().getDistance();
+		String sHigh = actuel.getHighJump().getDistance();
+		String s400 = actuel.getRun400m().getTime();
+		String s110 = actuel.getRun110mH().getTime();
+		String sDisc = actuel.getDiscus().getDistance();
+		String sPole = actuel.getPoleVault().getDistance();
+		String sJav = actuel.getJavelin().getDistance();
+		String s1500 = actuel.getRun1500m().getTime();
+				
+		if (s100 == null || s100.equals("")) {
+			BigDecimal pts100 = ((BigDecimal) repartition.get("1")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			s100 = actuel.getRun100m().findPerfWithPoints(pts100);
+		}
+		if (sLong == null || sLong.equals("")) {
+			BigDecimal ptsLong = ((BigDecimal) repartition.get("2")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			sLong = actuel.getLongJump().findPerfWithPoints(ptsLong);
+		}
+		if (sShot == null || sShot.equals("")) {
+			BigDecimal ptsShot = ((BigDecimal) repartition.get("3")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			sShot = actuel.getShotput().findPerfWithPoints(ptsShot);
+		}
+		if (sHigh == null || sHigh.equals("")) {
+			BigDecimal ptsHigh = ((BigDecimal) repartition.get("4")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			sHigh = actuel.getHighJump().findPerfWithPoints(ptsHigh);
+		}
+		if (s400 == null || s400.equals("")) {
+			BigDecimal pts400 = ((BigDecimal) repartition.get("5")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			s400 = actuel.getRun400m().findPerfWithPoints(pts400);
+		}
+		if (s110 == null || s110.equals("")) {
+			BigDecimal pts110 = ((BigDecimal) repartition.get("6")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			s110 = actuel.getRun110mH().findPerfWithPoints(pts110);
+		}
+		if (sDisc == null || sDisc.equals("")) {
+			BigDecimal ptsDisc = ((BigDecimal) repartition.get("7")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			sDisc = actuel.getDiscus().findPerfWithPoints(ptsDisc);
+		}
+		if (sPole == null || sPole.equals("")) {
+			BigDecimal ptsPole = ((BigDecimal) repartition.get("8")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			sPole = actuel.getPoleVault().findPerfWithPoints(ptsPole);
+		}
+		if (sJav == null || sJav.equals("")) {
+			BigDecimal ptsJav = ((BigDecimal) repartition.get("9")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			sJav = actuel.getJavelin().findPerfWithPoints(ptsJav);
+		}
+		if (s1500 == null || s1500.equals("")) {
+			BigDecimal pts1500 = ((BigDecimal) repartition.get("10")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			s1500 = actuel.getRun1500m().findPerfWithPoints(pts1500);
+		}
 		// de la plus petite à la plus forte répartir les points jusqu'au points du record en deca
 		// si le WR n'est pas battu faire la meme chose avec le best dans chaque epreuves
 		// si le WR n'est pas battu repartir l'ecart de point restant dans chaque epreuve
 		
-		Decathlon deca = new Decathlon();//"New World Record",r100,rlong,rshot,rhigh,r400,r110,rdisc,rpole,rjav,Run1500m.internalTime2String(r1500));
+		Decathlon deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
 		return deca;
+	}
+	
+	public static Map<String, BigDecimal> getRepartirion(Decathlon avg) {
+		Map<String, BigDecimal> repartition = new HashMap<String, BigDecimal>();
+		repartition.put("1", (new BigDecimal(avg.getRun100m().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("2", (new BigDecimal(avg.getLongJump().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("3", (new BigDecimal(avg.getShotput().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("4", (new BigDecimal(avg.getHighJump().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("5", (new BigDecimal(avg.getRun400m().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("6", (new BigDecimal(avg.getRun110mH().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("7", (new BigDecimal(avg.getDiscus().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("8", (new BigDecimal(avg.getPoleVault().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("9", (new BigDecimal(avg.getJavelin().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		repartition.put("10", (new BigDecimal(avg.getRun1500m().getPoints()).divide(new BigDecimal(avg.getTotal()), 2, RoundingMode.HALF_UP)));
+		return repartition;
 	}
 	
 	public static Decathlon avg3derniersDeca(Decathlon n, Decathlon nMoins1, Decathlon nMoins2) {

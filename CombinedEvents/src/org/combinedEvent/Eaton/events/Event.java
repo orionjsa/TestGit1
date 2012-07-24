@@ -1,6 +1,7 @@
 package org.combinedEvent.Eaton.events;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public abstract class Event {
 
@@ -18,5 +19,13 @@ public abstract class Event {
 		BigDecimal mPoints = a.multiply(new BigDecimal(Math.pow(perf.subtract(b).multiply(s).doubleValue(),c.doubleValue())));
 		mPoints = mPoints.setScale(0, BigDecimal.ROUND_DOWN);
 		return mPoints.intValue();
+	}
+	
+	protected BigDecimal retreivePerf(BigDecimal point, BigDecimal a, BigDecimal b, BigDecimal c, BigDecimal s) {
+		if (point == null || point.equals("")) {
+			return null;
+		}
+		BigDecimal perf = new BigDecimal(Math.pow(point.divide(a, 5, RoundingMode.HALF_UP).doubleValue(),1.0/c.doubleValue())).multiply(s).add(b);
+		return perf;
 	}
 }
