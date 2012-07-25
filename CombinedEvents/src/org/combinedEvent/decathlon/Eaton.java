@@ -8,7 +8,7 @@ public class Eaton {
 	 */
 	public static void main(String[] args) {
 		
-		Decathlon actuel = new Decathlon("JO", "10.30", "790", "14.50", "205", "46.50", "", "", "", "", "");
+		Decathlon actuel = new Decathlon("JO", "", "", "", "", "", "", "", "", "", "");
 		
 		// les 3 derniers deca
 		Decathlon dernierDeca = new Decathlon("Deca n", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
@@ -16,7 +16,7 @@ public class Eaton {
 		Decathlon antepenultiemeDeca = new Decathlon("Deca n-2", "10.33", "780", "14.14", "205", "46.35", "13.52", "41.58", "505", "56.19", "4:24.10");
 		
 		// pronostic
-		Decathlon pronostic = new Decathlon("Pronostic", "10.35", "780", "14.00", "200", "46.80", "13.90", "43.00", "500", "56.00", "4:20.00");
+		Decathlon pronostic = new Decathlon("Pronostic", "10.35", "780", "14.20", "202", "46.80", "13.90", "43.00", "500", "56.00", "4:20.00");
 		// record perso deca
 		Decathlon recordPerso = new Decathlon("Personal Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		// record perso epreuves
