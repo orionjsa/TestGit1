@@ -18,18 +18,19 @@ public class Mayer {
 		// pronostic
 		Decathlon pronostic = new Decathlon("Pronostic", "10.35", "780", "14.00", "200", "46.80", "13.90", "43.00", "500", "56.00", "4:20.00");
 		// record perso deca
-		Decathlon recordPerso = new Decathlon("Personal Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
+		Decathlon recordPerso = new Decathlon("Personal Record", "", "", "", "", "", "", "", "", "", "");
 		// record perso epreuves
-		Decathlon persoEpreuves = new Decathlon("Personal Best", "", "", "", "", "", "", "", "", "", "4:");
+		Decathlon persoEpreuves = new Decathlon("Personal Best", "", "", "", "", "", "", "", "", "", "");
 		// record France
-		Decathlon recordFrance = new Decathlon("France Record", "", "", "", "", "", "", "", "", "", "4:");
+		Decathlon recordFrance = new Decathlon("France Record", "", "", "", "", "", "", "", "", "", "");
 		// record Europe
-		Decathlon recordArea = new Decathlon("Area Record", "", "", "", "", "", "", "", "", "", "4:");
+		Decathlon recordArea = new Decathlon("Area Record", "", "", "", "", "", "", "", "", "", "");
 		// record du monde
 		Decathlon recordDuMonde = new Decathlon("World Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		
 		Decathlon moyenneSurLes3DerniersDeca = Utils.avg3derniersDeca(dernierDeca, avantDernierDeca, antepenultiemeDeca);
-		Decathlon newWorldRecord = Utils.toBeatRecord(actuel, recordDuMonde, moyenneSurLes3DerniersDeca, persoEpreuves);
+		Decathlon newRecord = new Decathlon("New World Record", "", "", "", "", "", "", "", "", "", "");
+		Decathlon newWorldRecord = Utils.toBeatRecord(actuel, recordDuMonde, newRecord, moyenneSurLes3DerniersDeca, persoEpreuves);
 		
 		
 		

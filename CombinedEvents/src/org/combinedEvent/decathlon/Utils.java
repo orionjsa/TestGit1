@@ -9,8 +9,186 @@ import org.combinedEvent.decathlon.events.Run1500m;
 
 public class Utils {
 
+	public static Decathlon toBeatRecord2(Decathlon actuel, Decathlon record, Decathlon newRecord, Decathlon moyenneSurLes3DerniersDeca, Decathlon personalBest) {
+		// trouver la repartition de point en se basant sur le deca moyen
+		Map<String, BigDecimal> repartition = getRepartirion(moyenneSurLes3DerniersDeca);
+		BigDecimal totalRepartition = getTotalRepartition(repartition, actuel, newRecord);
+		
+		// on génére une perf en fonction de l'ecart du total et la repartion des points dans les epreuves
+		int ecart = (record.getTotal()+1-actuel.getTotal());
+		String s100 = actuel.getRun100m().getTime();
+		String sLong = actuel.getLongJump().getDistance();
+		String sShot = actuel.getShotput().getDistance();
+		String sHigh = actuel.getHighJump().getDistance();
+		String s400 = actuel.getRun400m().getTime();
+		String s110 = actuel.getRun110mH().getTime();
+		String sDisc = actuel.getDiscus().getDistance();
+		String sPole = actuel.getPoleVault().getDistance();
+		String sJav = actuel.getJavelin().getDistance();
+		String s1500 = actuel.getRun1500m().getTime();
+		newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+				
+		if (s100 == null || s100.equals("")) {
+			BigDecimal pts100 = ((BigDecimal) repartition.get("1")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (pts100.compareTo(new BigDecimal(personalBest.getRun100m().getPoints())) < 0) {
+				s100 = actuel.getRun100m().findPerfWithPoints(pts100);
+			} else {
+				s100 = personalBest.getRun100m().getTime();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("1"));
+		}
+		if (sLong == null || sLong.equals("")) {
+			BigDecimal ptsLong = ((BigDecimal) repartition.get("2")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (ptsLong.compareTo(new BigDecimal(personalBest.getLongJump().getPoints())) < 0) {
+				sLong = actuel.getLongJump().findPerfWithPoints(ptsLong);
+			} else {
+				sLong = personalBest.getLongJump().getDistance();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("2"));
+		}
+		if (sShot == null || sShot.equals("")) {
+			BigDecimal ptsShot = ((BigDecimal) repartition.get("3")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (ptsShot.compareTo(new BigDecimal(personalBest.getShotput().getPoints())) < 0) {
+				sShot = actuel.getShotput().findPerfWithPoints(ptsShot);
+			} else {
+				sShot = personalBest.getShotput().getDistance();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("3"));
+		}
+		if (sHigh == null || sHigh.equals("")) {
+			BigDecimal ptsHigh = ((BigDecimal) repartition.get("4")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (ptsHigh.compareTo(new BigDecimal(personalBest.getHighJump().getPoints())) < 0) {
+				sHigh = actuel.getHighJump().findPerfWithPoints(ptsHigh);
+			} else {
+				sHigh = personalBest.getHighJump().getDistance();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("4"));
+		}
+		if (s400 == null || s400.equals("")) {
+			BigDecimal pts400 = ((BigDecimal) repartition.get("5")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (pts400.compareTo(new BigDecimal(personalBest.getRun400m().getPoints())) < 0) {
+				s400 = actuel.getRun400m().findPerfWithPoints(pts400);
+			} else {
+				s400 = personalBest.getRun400m().getTime();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("5"));
+		}
+		if (s110 == null || s110.equals("")) {
+			BigDecimal pts110 = ((BigDecimal) repartition.get("6")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (pts110.compareTo(new BigDecimal(personalBest.getRun110mH().getPoints())) < 0) {
+				s110 = actuel.getRun110mH().findPerfWithPoints(pts110);
+			} else {
+				s110 = personalBest.getRun110mH().getTime();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("6"));
+		}
+		if (sDisc == null || sDisc.equals("")) {
+			BigDecimal ptsDisc = ((BigDecimal) repartition.get("7")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (ptsDisc.compareTo(new BigDecimal(personalBest.getDiscus().getPoints())) < 0) {
+				sDisc = actuel.getDiscus().findPerfWithPoints(ptsDisc);
+			} else {
+				sDisc = personalBest.getDiscus().getDistance();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("7"));
+		}
+		if (sPole == null || sPole.equals("")) {
+			BigDecimal ptsPole = ((BigDecimal) repartition.get("8")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (ptsPole.compareTo(new BigDecimal(personalBest.getPoleVault().getPoints())) < 0) {
+				sPole = actuel.getPoleVault().findPerfWithPoints(ptsPole);
+			} else {
+				sPole = personalBest.getPoleVault().getDistance();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("8"));
+		}
+		if (sJav == null || sJav.equals("")) {
+			BigDecimal ptsJav = ((BigDecimal) repartition.get("9")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (ptsJav.compareTo(new BigDecimal(personalBest.getJavelin().getPoints())) < 0) {
+				sJav = actuel.getJavelin().findPerfWithPoints(ptsJav);
+			} else {
+				sJav = personalBest.getJavelin().getDistance();
+			}			
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("9"));
+		}
+		if (s1500 == null || s1500.equals("")) {
+			BigDecimal pts1500 = ((BigDecimal) repartition.get("10")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
+			if (pts1500.compareTo(new BigDecimal(personalBest.getRun1500m().getPoints())) < 0) {
+				s1500 = actuel.getRun1500m().findPerfWithPoints(pts1500);
+			} else {
+				s1500 = personalBest.getRun1500m().getTime();
+			}
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
+			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("10"));
+		}
+		//si le record n'est pas battu
+		// raz les epreuves pas encore passées et inférieures au record perso
+		// recalculer la repartition
+		// refaire le calcul de points
+		
+		//si le record n'est pas battu
+		// raz toutes les epreuves pas encore passées
+		// recalculer la repartition
+		// refaire le calcul de points sans respecter le record perso
+		
+		newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+		return newRecord;
+	}
 	
-	public static Decathlon toBeatRecord(Decathlon actuel, Decathlon recordDuMonde, Decathlon moyenneSurLes3DerniersDeca, Decathlon personalBest) {
+	public static BigDecimal getTotalRepartition(Map<String, BigDecimal> repartition, Decathlon actuel, Decathlon newRecord) {
+		BigDecimal totalRepartition = new BigDecimal("0");
+		// compter combien il reste d'epreuves
+		if ((actuel.getRun100m().getTime() == null || actuel.getRun100m().getTime().equals("")) && (newRecord.getRun100m().getTime() == null || newRecord.getRun100m().getTime().equals(""))) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("1"));
+		}
+		if (actuel.getLongJump().getDistance() == null || actuel.getLongJump().getDistance().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("2"));
+		}
+		if (actuel.getShotput().getDistance() == null || actuel.getShotput().getDistance().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("3"));
+		}
+		if (actuel.getHighJump().getDistance() == null || actuel.getHighJump().getDistance().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("4"));
+		}
+		if (actuel.getRun400m().getTime() == null || actuel.getRun400m().getTime().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("5"));
+		}
+		if (actuel.getRun110mH().getTime() == null || actuel.getRun110mH().getTime().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("6"));
+		}
+		if (actuel.getDiscus().getDistance() == null || actuel.getDiscus().getDistance().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("7"));
+		}
+		if (actuel.getPoleVault().getDistance() == null || actuel.getPoleVault().getDistance().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("8"));
+		}
+		if (actuel.getJavelin().getDistance() == null || actuel.getJavelin().getDistance().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("9"));
+		}
+		if (actuel.getRun1500m().getTime() == null || actuel.getRun1500m().getTime().equals("")) {
+			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("10"));
+		}
+		return totalRepartition;
+	}
+	
+	public static Decathlon toBeatRecord(Decathlon actuel, Decathlon record, Decathlon newRecord, Decathlon moyenneSurLes3DerniersDeca, Decathlon personalBest) {
 		// trouver la repartition de point en se basant sur le deca moyen
 		Map repartition = getRepartirion(moyenneSurLes3DerniersDeca);
 		BigDecimal totalRepartition = new BigDecimal("0");
@@ -57,9 +235,9 @@ public class Utils {
 			totalRepartition = totalRepartition.add((BigDecimal) repartition.get("10"));
 		}
 		// soustraire du WR+1pt le total actuel puis diviser par le nombre d epreuves restantes
-		int ecartParEpreuve = (recordDuMonde.getTotal()+2-actuel.getTotal())/restantes;
+		int ecartParEpreuve = (record.getTotal()+2-actuel.getTotal())/restantes;
 		// on génére une perf en fonction de l'ecart du total et la repartion des points dans les epruves
-		int ecart = (recordDuMonde.getTotal()+1-actuel.getTotal());
+		int ecart = (record.getTotal()+1-actuel.getTotal());
 		String s100 = actuel.getRun100m().getTime();
 		String sLong = actuel.getLongJump().getDistance();
 		String sShot = actuel.getShotput().getDistance();
@@ -70,7 +248,7 @@ public class Utils {
 		String sPole = actuel.getPoleVault().getDistance();
 		String sJav = actuel.getJavelin().getDistance();
 		String s1500 = actuel.getRun1500m().getTime();
-		Decathlon deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+		newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
 				
 		if (s100 == null || s100.equals("")) {
 			BigDecimal pts100 = ((BigDecimal) repartition.get("1")).multiply(new BigDecimal(ecart)).divide(totalRepartition, 0, RoundingMode.HALF_UP);
@@ -79,8 +257,8 @@ public class Utils {
 			} else {
 				s100 = personalBest.getRun100m().getTime();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("1"));
 		}
 		if (sLong == null || sLong.equals("")) {
@@ -90,8 +268,8 @@ public class Utils {
 			} else {
 				sLong = personalBest.getLongJump().getDistance();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("2"));
 		}
 		if (sShot == null || sShot.equals("")) {
@@ -101,8 +279,8 @@ public class Utils {
 			} else {
 				sShot = personalBest.getShotput().getDistance();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("3"));
 		}
 		if (sHigh == null || sHigh.equals("")) {
@@ -112,8 +290,8 @@ public class Utils {
 			} else {
 				sHigh = personalBest.getHighJump().getDistance();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("4"));
 		}
 		if (s400 == null || s400.equals("")) {
@@ -123,8 +301,8 @@ public class Utils {
 			} else {
 				s400 = personalBest.getRun400m().getTime();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("5"));
 		}
 		if (s110 == null || s110.equals("")) {
@@ -134,8 +312,8 @@ public class Utils {
 			} else {
 				s110 = personalBest.getRun110mH().getTime();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("6"));
 		}
 		if (sDisc == null || sDisc.equals("")) {
@@ -145,8 +323,8 @@ public class Utils {
 			} else {
 				sDisc = personalBest.getDiscus().getDistance();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("7"));
 		}
 		if (sPole == null || sPole.equals("")) {
@@ -156,8 +334,8 @@ public class Utils {
 			} else {
 				sPole = personalBest.getPoleVault().getDistance();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("8"));
 		}
 		if (sJav == null || sJav.equals("")) {
@@ -167,8 +345,8 @@ public class Utils {
 			} else {
 				sJav = personalBest.getJavelin().getDistance();
 			}			
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("9"));
 		}
 		if (s1500 == null || s1500.equals("")) {
@@ -178,16 +356,16 @@ public class Utils {
 			} else {
 				s1500 = personalBest.getRun1500m().getTime();
 			}
-			deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-			ecart = recordDuMonde.getTotal()+1-deca.getTotal();
+			newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+			ecart = record.getTotal()+1-newRecord.getTotal();
 			totalRepartition = totalRepartition.subtract((BigDecimal) repartition.get("10"));
 		}
 		// de la plus petite à la plus forte répartir les points jusqu'au points du record en deca
 		// si le WR n'est pas battu faire la meme chose avec le best dans chaque epreuves
 		// si le WR n'est pas battu repartir l'ecart de point restant dans chaque epreuve
 		
-		deca = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
-		return deca;
+		newRecord = new Decathlon("New World Record",s100,sLong,sShot,sHigh,s400,s110,sDisc,sPole,sJav,s1500);
+		return newRecord;
 	}
 	
 	public static Map<String, BigDecimal> getRepartirion(Decathlon avg) {
