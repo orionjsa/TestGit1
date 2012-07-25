@@ -121,6 +121,48 @@ public class Decathlon {
 	public Run1500m getRun1500m() {
 		return run1500m;
 	}
-	
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setRun100m(Run100m run100m) {
+		this.run100m = run100m;
+	}
+
+	public void setLongJump(LongJump longJump) {
+		this.longJump = longJump;
+	}
+
+	public void setShotput(Shotput shotput) {
+		this.shotput = shotput;
+	}
+
+	public void setHighJump(HighJump highJump) {
+		this.highJump = highJump;
+	}
+
+	public void setRun400m(Run400m run400m) {
+		this.run400m = run400m;
+	}
+
+	public void setRun110mH(Run110mH run110mH) {
+		this.run110mH = run110mH;
+	}
+
+	public void setDiscus(Discus discus) {
+		this.discus = discus;
+	}
+
+	public void setPoleVault(PoleVault poleVault) {
+		this.poleVault = poleVault;
+	}
+
+	public void setJavelin(Javelin javelin) {
+		this.javelin = javelin;
+	}
+
+	public void setRun1500m(Run1500m run1500m) {
+		this.run1500m = run1500m;
+	}
 }

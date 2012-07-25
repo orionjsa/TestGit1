@@ -29,8 +29,7 @@ public class Eaton {
 		Decathlon recordDuMonde = new Decathlon("World Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		
 		Decathlon moyenneSurLes3DerniersDeca = Utils.avg3derniersDeca(dernierDeca, avantDernierDeca, antepenultiemeDeca);
-		Decathlon newRecord = new Decathlon("New World Record", "", "", "", "", "", "", "", "", "", "");
-		Decathlon newWorldRecord = Utils.toBeatRecord2(actuel, recordDuMonde, newRecord, moyenneSurLes3DerniersDeca, persoEpreuves);
+		Decathlon newWorldRecord = Utils.toBeatRecord2("New World Record", actuel, recordDuMonde, moyenneSurLes3DerniersDeca, persoEpreuves);
 		
 		
 		
