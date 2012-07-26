@@ -22,14 +22,14 @@ public class Eaton {
 		// record perso epreuves
 		Decathlon persoEpreuves = new Decathlon("Personal Best", "10.19", "823", "14.78", "211", "45.68", "13.34", "47.36", "530", "61.68", "4:14.48");
 		// record pays
-		Decathlon recordUSA = new Decathlon("USA Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
+		Decathlon recordUSA = new Decathlon("National Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		// record amerique du nord
 		Decathlon recordArea = new Decathlon("Area Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		// record du monde
 		Decathlon recordDuMonde = new Decathlon("World Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		
 		Decathlon moyenneSurLes3DerniersDeca = Utils.avg3derniersDeca(dernierDeca, avantDernierDeca, antepenultiemeDeca);
-		Decathlon newWorldRecord = Utils.toBeatRecord2("New World Record", actuel, recordDuMonde, moyenneSurLes3DerniersDeca, persoEpreuves);
+		Decathlon newWorldRecord = Utils.toBeatRecord("New World Record", actuel, recordDuMonde, moyenneSurLes3DerniersDeca, persoEpreuves);
 		
 		
 		

@@ -9,7 +9,7 @@ import org.combinedEvent.decathlon.events.Run1500m;
 
 public class Utils {
 
-	public static Decathlon toBeatRecord2(String title, Decathlon actuel, Decathlon record, Decathlon moyenneSurLes3DerniersDeca, Decathlon personalBest) {
+	public static Decathlon toBeatRecord(String title, Decathlon actuel, Decathlon record, Decathlon moyenneSurLes3DerniersDeca, Decathlon personalBest) {
 		Decathlon newRecord = new Decathlon();
 		newRecord.setName(title);
 		newRecord.getRun100m().setTime(actuel.getRun100m().getTime());
@@ -270,7 +270,7 @@ public class Utils {
 		}
 	}
 	
-	public static Decathlon toBeatRecord(Decathlon actuel, Decathlon record, Decathlon newRecord, Decathlon moyenneSurLes3DerniersDeca, Decathlon personalBest) {
+	public static Decathlon toBeatRecordOldVersion(Decathlon actuel, Decathlon record, Decathlon newRecord, Decathlon moyenneSurLes3DerniersDeca, Decathlon personalBest) {
 		// trouver la repartition de point en se basant sur le deca moyen
 		Map repartition = getRepartirion(moyenneSurLes3DerniersDeca);
 		BigDecimal totalRepartition = new BigDecimal("0");
