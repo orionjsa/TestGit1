@@ -27,13 +27,12 @@ public class Eaton {
 		Decathlon recordArea = new Decathlon("Area Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
 		// record du monde
 		Decathlon recordDuMonde = new Decathlon("World Record", "10.21", "823", "14.20", "205", "46.70", "13.70", "42.81", "530", "58.87", "4:14.48");
+		// record Olympique
+		Decathlon recordOlympique = new Decathlon("Olympic Record", "10.85", "784", "16.36", "212", "48.36", "14.05", "48.72", "500", "70.52", "4:40.01");
 		
 		Decathlon moyenneSurLes3DerniersDeca = Utils.avg3derniersDeca(dernierDeca, avantDernierDeca, antepenultiemeDeca);
+		Decathlon newOlympicRecord = Utils.toBeatRecord("New Olympic Record", actuel, recordOlympique, moyenneSurLes3DerniersDeca, persoEpreuves);
 		Decathlon newWorldRecord = Utils.toBeatRecord("New World Record", actuel, recordDuMonde, moyenneSurLes3DerniersDeca, persoEpreuves);
-		
-		
-		
-		
 		
 		// print JO
 		System.out.println(actuel);
@@ -41,6 +40,8 @@ public class Eaton {
 		System.out.println(pronostic);
 		// print moyenne
 		System.out.println(moyenneSurLes3DerniersDeca);
+		// print to beat
+		System.out.println(newOlympicRecord);
 		// print to beat
 		System.out.println(newWorldRecord);
 		// print perso epreuves
@@ -53,6 +54,8 @@ public class Eaton {
 		System.out.println(recordArea);
 		// print record du monde
 		System.out.println(recordDuMonde);
+		// print record Olympique
+		System.out.println(recordOlympique);
 	}
 	
 }
