@@ -47,11 +47,11 @@ public class Eaton {
 		// print perso epreuves
 		System.out.println(persoEpreuves);
 		// print perso deca
-		System.out.println(recordPerso);
+//		System.out.println(recordPerso);
 		// print record pays
-		System.out.println(recordUSA);
+//		System.out.println(recordUSA);
 		// print record amerique
-		System.out.println(recordArea);
+//		System.out.println(recordArea);
 		// print record du monde
 		System.out.println(recordDuMonde);
 		// print record Olympique
